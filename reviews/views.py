@@ -1,20 +1,20 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
+from .forms import ReviewForm
+
 def review(request):
     if request.method == 'POST':
-        username = request.POST['username']
+        form = ReviewForm(request.POST)
 
-        if username == '':
-            return render(request, 'reviews/review.html', {
-                'has_error': True,
-            })
-
-        print(username)
-        return HttpResponseRedirect('/thank-you')
+        if form.is_valid():
+            print(form.cleaned_data)
+            return HttpResponseRedirect('/thank-you')
+    else:
+        form = ReviewForm()
 
     return render(request, 'reviews/review.html', {
-        'has_error': False,
+        'form': form
     })
 
 def thank_you(request):
