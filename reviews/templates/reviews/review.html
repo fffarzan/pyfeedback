@@ -6,8 +6,11 @@
     <title>Review</title>
   </head>
   <body>
-    <form method="POST">
-      {% csrf_token %}
+    <form action="/" method="POST">
+      {% csrf_token %} 
+      {% if has_error %}
+        <p>This field is required</p>
+      {% endif %}
       <label for="username">Name</label>
       <input type="text" id="username" name="username" />
       <button type="submit">Send</button>
